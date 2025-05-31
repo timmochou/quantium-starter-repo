@@ -11,19 +11,19 @@ data2 = pd.read_csv('/Users/timmochou/workspace/Quantium_SWE/data/daily_sales_da
 # Concatenate DataFrames
 data = pd.concat([data0,data1,data2],ignore_index=True)
 # only want to see the product of pink morsel
-pink_morsel = data[data['product']=='pink morsel']
+pink_morsel = data[data['product']=='pink morsel'].copy()
 
 """
 to watch the total sales: multiply the quantity and price groupby given day
 """
 
 #reomve the $ IN THE PRICE COLUMN
-pink_morsel['price'] = pink_morsel['price'].str.replace('$', '')
+pink_morsel.loc[:, 'price'] = pink_morsel['price'].str.replace('$', '')
 # Convert the data type to float 
-pink_morsel['price'] = pink_morsel['price'].astype(float)
-pink_morsel['quantity'] = pink_morsel['quantity'].astype(float)
+pink_morsel.loc[:, 'price'] = pink_morsel['price'].astype(float)
+pink_morsel.loc[:, 'quantity'] = pink_morsel['quantity'].astype(float)
 # Calculate sales
-pink_morsel['sales'] = pink_morsel['quantity'] * pink_morsel['price']
+pink_morsel.loc[:, 'sales'] = pink_morsel['quantity'] * pink_morsel['price']
 
 # Convert date to datetime
 pink_morsel['date'] = pd.to_datetime(pink_morsel['date'])
